@@ -9,10 +9,11 @@ type File struct {
 }
 
 type Patch struct {
-	Files       []File   `xml:"files>file"`
-	TorrentHash string   `xml:"torrent>hash"`
-	TorrentURLs []string `xml:"torrent>urls>url"`
-	VersionTo   string   `xml:"version_to"`
+	Files       []File        `xml:"files>file"`
+	TorrentHash string        `xml:"torrent>hash"`
+	TorrentURLs []TorrentFile `xml:"torrent>urls>url"`
+	VersionTo   string        `xml:"version_to"`
+	Part        string        `xml:"part"`
 }
 
 type WebSeed struct {
@@ -42,7 +43,7 @@ func (s PatchesChainProtocol) GetPatchesChain(chainType string) *PatchesChain {
 	return nil
 }
 
-func GetPatchesChain(host string, gameID string, query url.Values, meta *MetadataProtocol) (*PatchesChainProtocol, error) {
+func GetPatchesChain(host string, gameID string, versions map[string]string, query url.Values, meta *MetadataProtocol) (*PatchesChainProtocol, error) {
 	if query == nil {
 		query = url.Values{}
 	}
@@ -66,7 +67,11 @@ func GetPatchesChain(host string, gameID string, query url.Values, meta *Metadat
 
 	if clientType := meta.Metadata.GetClientType(query.Get(`client_type`)); clientType != nil {
 		for _, part := range clientType.Parts {
-			querySetDefault(query, part.ID+`_current_version`, `0`)
+			version := `0`
+			if v, found := versions[part.ID]; found {
+				version = v
+			}
+			querySetDefault(query, part.ID+`_current_version`, version)
 		}
 	} else {
 		return nil, ErrUnknownClientType

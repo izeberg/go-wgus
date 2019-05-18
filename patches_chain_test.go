@@ -1,14 +1,12 @@
 package wgus
 
 import (
-	"log"
+	"testing"
 )
 
-
-func ExampleGetPatchesChain() {
-	chain, err := GetPatchesChain(`wgus-wotru.wargaming.net`, `WOT.RU.PRODUCTION`, nil, nil)
+func TestGetPatchesChain(t *testing.T) {
+	_, err := GetPatchesChain(`wgus-wotru.wargaming.net`, `WOT.RU.PRODUCTION`, nil, nil, nil)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
-	log.Println(chain)
 }

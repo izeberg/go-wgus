@@ -19,6 +19,8 @@ type Protocol struct {
 	Version string `xml:"version,attr"`
 }
 
+type TorrentFile string
+
 func makeRequest(host, path string, query url.Values) url.URL {
 	return url.URL{
 		Scheme:   `http`,
@@ -28,7 +30,7 @@ func makeRequest(host, path string, query url.Values) url.URL {
 	}
 }
 
-func querySetDefault(query url.Values, key, value string)  {
+func querySetDefault(query url.Values, key, value string) {
 	if _, found := query[key]; !found {
 		query.Set(key, value)
 	}
