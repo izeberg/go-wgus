@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 type Error struct {
@@ -38,7 +39,7 @@ func querySetDefault(query url.Values, key, value string) {
 
 func unpackError(proto Protocol) error {
 	if proto.ErrorCode != 0 {
-		return errors.New(proto.ErrorDescription)
+		return errors.New(proto.ErrorDescription + `:` + strconv.Itoa(proto.ErrorCode))
 	}
 	return nil
 }
@@ -47,6 +48,9 @@ func request(proto interface{}, requestURL url.URL) error {
 	if resp, err := http.Get(requestURL.String()); err == nil {
 		if data, err := ioutil.ReadAll(resp.Body); err == nil {
 			if err := xml.Unmarshal(data, proto); err == nil {
+				if resp.StatusCode != http.StatusOK {
+					return errors.New(resp.Status)
+				}
 				return nil
 			} else {
 				return err

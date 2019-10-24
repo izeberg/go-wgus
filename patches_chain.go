@@ -61,9 +61,9 @@ func GetPatchesChain(host string, gameID string, versions map[string]string, que
 	query.Set(`metadata_protocol_version`, MetadataProtocolVersion)
 	query.Set(`installation_id`, InstallationID)
 
-	querySetDefault(query, `client_type`, meta.Metadata.DefaultClientType)
-	querySetDefault(query, `lang`, meta.DefaultLanguage)
-	querySetDefault(query, `metadata_version`, meta.MetadataVersion)
+	querySetDefault(query, `client_type`, meta.Metadata.ClientTypes.Default)
+	querySetDefault(query, `lang`, meta.Metadata.DefaultLanguage)
+	querySetDefault(query, `metadata_version`, meta.Version)
 
 	if clientType := meta.Metadata.GetClientType(query.Get(`client_type`)); clientType != nil {
 		for _, part := range clientType.Parts {

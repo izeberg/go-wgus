@@ -25,25 +25,8 @@ type ClientType struct {
 }
 
 type Metadata struct {
-	DefaultClientType string       `xml:"default_client_type"`
-	ClientTypes       []ClientType `xml:"client_type"`
-}
-
-func (s Metadata) GetClientType(id string) *ClientType {
-	for _, t := range s.ClientTypes {
-		if t.ID == id {
-			return &t
-		}
-	}
-	return nil
-}
-
-type MetadataProtocol struct {
-	Protocol
-
 	App                 Application    `xml:"app_id"`
 	ChainID             string         `xml:"chain_id"`
-	MetadataVersion     string         `xml:"metadata_version"`
 	SupportedLanguages  string         `xml:"supported_languages"`
 	DefaultLanguage     string         `xml:"default_language"`
 	Name                string         `xml:"name"`
@@ -54,7 +37,26 @@ type MetadataProtocol struct {
 	MutexName           string         `xml:"mutex_name"`
 	KeepPatchesInterval int            `xml:"keep_patches_interval"`
 	LoginEnabled        bool           `xml:"login_enabled"`
-	Metadata            Metadata       `xml:"metadata"`
+	ClientTypes       struct{
+		Types []ClientType `xml:"client_type"`
+		Default string       `xml:"default,attr"`
+	} `xml:"client_types"`
+}
+
+func (s Metadata) GetClientType(id string) *ClientType {
+	for _, t := range s.ClientTypes.Types {
+		if t.ID == id {
+			return &t
+		}
+	}
+	return nil
+}
+
+type MetadataProtocol struct {
+	Protocol
+	Version     string         `xml:"version"`
+	Metadata Metadata `xml:"predefined_section"`
+	GeneratedSection interface {} `xml:"generated_section"`
 
 	// TODO: Implement keys
 	// example https://wgus-wotru.wargaming.net/api/v1/metadata/?guid=WOT.RU.PRODUCTION&protocol_version=5.15&chain_id=unknown
