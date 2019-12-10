@@ -20,4 +20,10 @@ msvcp140.dll	440120	954DB51D`)
 	if repo[`Licenses.txt`].Name != `Licenses.txt` || repo[`Licenses.txt`].CRC != 0x3676FC08 || repo[`Licenses.txt`].Size != 96715 {
 		t.Fatal(`wrong file info`, repo[`Licenses.txt`])
 	}
+
+	repo = ReferenceRepository{}
+	err := repo.FetchTorrent(`http://dl-wot-cdx.wargaming.net/ru/references/wot_1.7.0.20129_client.torrent`)
+	if err != nil {
+		t.Fatal(err)
+	}
 }

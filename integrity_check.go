@@ -5,7 +5,6 @@ import (
 	"github.com/pkg/errors"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 type Torrent struct {
@@ -72,7 +71,7 @@ func (s Torrent) GetReferenceRepository() (ReferenceRepository, error) {
 
 func (s TorrentFile) GetReferenceRepository() (ReferenceRepository, error) {
 	repo := ReferenceRepository{}
-	return repo, repo.Fetch(strings.Replace(string(s), `.torrent`, `.filelist.txt`, -1))
+	return repo, repo.FetchTorrent(s)
 }
 
 func (s TorrentFile) Parse() (*gotorrentparser.Torrent, error) {
