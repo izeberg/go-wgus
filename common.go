@@ -9,9 +9,15 @@ import (
 	"strconv"
 )
 
+type ChangedGameInfo struct {
+	RedirectApplicationID string `xml:"redirect_application_id"`
+	RedirectURL           string `xml:"redirect_url"`
+}
+
 type Error struct {
-	ErrorCode        int    `xml:"code"`
-	ErrorDescription string `xml:"description"`
+	ErrorCode        int              `xml:"code"`
+	ErrorDescription string           `xml:"description"`
+	ChangedGameInfo  *ChangedGameInfo `xml:"changed_game_info"`
 }
 
 type Protocol struct {
@@ -40,6 +46,9 @@ func querySetDefault(query url.Values, key, value string) {
 func unpackError(proto Protocol) error {
 	if proto.ErrorCode != 0 {
 		return errors.New(proto.ErrorDescription + `:` + strconv.Itoa(proto.ErrorCode))
+	}
+	if proto.ChangedGameInfo != nil {
+		return errors.New(`ChangedGameInfo:` + proto.ChangedGameInfo.RedirectApplicationID + `@` + proto.ChangedGameInfo.RedirectURL)
 	}
 	return nil
 }
