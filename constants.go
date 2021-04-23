@@ -7,7 +7,7 @@ import (
 
 const (
 	ProtocolVersion         = `1.9`
-	MetadataProtocolVersion = `6.5`
+	MetadataProtocolVersion = `6.9`
 	InstallationID          = `go-wgus`
 )
 
