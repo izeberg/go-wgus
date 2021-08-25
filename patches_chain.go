@@ -31,6 +31,7 @@ type PatchesChain struct {
 
 type PatchesChainProtocol struct {
 	Protocol
+	Error
 	PatchesChain []PatchesChain `xml:"patches_chain"`
 }
 
@@ -79,12 +80,8 @@ func GetPatchesChain(host string, gameID string, versions map[string]string, que
 
 	proto := &PatchesChainProtocol{}
 	if err := request(proto, makeRequest(host, `/api/v1/patches_chain/`, query)); err == nil {
-		if err := unpackError(proto.Protocol); err == nil {
-			return proto, nil
-		} else {
-			return proto, err
-		}
+		return proto, unpackError(proto.Protocol)
 	} else {
-		return nil, err
+		return proto, err
 	}
 }
