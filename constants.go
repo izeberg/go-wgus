@@ -2,16 +2,12 @@ package wgus
 
 import (
 	"github.com/pkg/errors"
-	"regexp"
 )
 
 const (
 	ProtocolVersion         = `1.9`
-	MetadataProtocolVersion = `6.9`
+	MetadataProtocolVersion = `7.2`
 	InstallationID          = `go-wgus`
 )
 
-var (
-	ModsFolderRegex      = regexp.MustCompile(`mods/(.+?)/readme\.txt`)
-	ErrUnknownClientType = errors.New(`unknown client_type, try to check metadata`)
-)
+var ErrUnknownClientType = errors.New(`unknown client_type, try to check metadata`)
