@@ -33,6 +33,7 @@ type PatchesChainProtocol struct {
 	Protocol
 	Error
 	PatchesChain []PatchesChain `xml:"patches_chain"`
+	VersionName  string         `xml:"version_name"`
 }
 
 func (s PatchesChainProtocol) GetPatchesChain(chainType string) *PatchesChain {
