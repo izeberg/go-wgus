@@ -37,8 +37,8 @@ type Metadata struct {
 	MutexName           string         `xml:"mutex_name"`
 	KeepPatchesInterval int            `xml:"keep_patches_interval"`
 	LoginEnabled        bool           `xml:"login_enabled"`
-	ClientTypes       struct{
-		Types []ClientType `xml:"client_type"`
+	ClientTypes         struct {
+		Types   []ClientType `xml:"client_type"`
 		Default string       `xml:"default,attr"`
 	} `xml:"client_types"`
 }
@@ -54,9 +54,9 @@ func (s Metadata) GetClientType(id string) *ClientType {
 
 type MetadataProtocol struct {
 	Protocol
-	Version     string         `xml:"version"`
-	Metadata Metadata `xml:"predefined_section"`
-	GeneratedSection interface {} `xml:"generated_section"`
+	Version          string      `xml:"version"`
+	Metadata         Metadata    `xml:"predefined_section"`
+	GeneratedSection interface{} `xml:"generated_section"`
 
 	// TODO: Implement keys
 	// example https://wgus-wotru.wargaming.net/api/v1/metadata/?guid=WOT.RU.PRODUCTION&protocol_version=5.15&chain_id=unknown

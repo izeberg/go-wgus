@@ -1,12 +1,12 @@
 package wgus
 
 import (
-	"github.com/pkg/errors"
+	"errors"
 )
 
 const (
 	ProtocolVersion         = `1.11`
-	MetadataProtocolVersion = `7.2`
+	MetadataProtocolVersion = `7.5`
 	InstallationID          = `go-wgus`
 )
 

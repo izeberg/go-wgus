@@ -2,7 +2,7 @@ package wgus
 
 import (
 	"encoding/xml"
-	"github.com/pkg/errors"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"net/url"
