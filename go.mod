@@ -1,3 +1,3 @@
-module bitbucket.org/IzeBerg/go-wgus
+module github.com/izeberg/go-wgus
 
 go 1.15
