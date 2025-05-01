@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	ProtocolVersion         = `1.11`
-	MetadataProtocolVersion = `7.5`
+	ProtocolVersion         = `100500.6969696`
+	MetadataProtocolVersion = `100500.6969696`
 	InstallationID          = `go-wgus`
 )
 
